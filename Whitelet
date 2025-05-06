@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whitelet - Premium Collectible Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --primary-light: #e0fbfc;
+            --secondary: #7209b7;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #ef233c;
+            --light: #f8f9fa;
+            --light-gray: #e9ecef;
+            --medium-gray: #adb5bd;
+            --dark: #212529;
+            --white: #ffffff;
+            
+            /* Rarity colors */
+            --uncommon: #38b000;
+            --rare: #0096c7;
+            --epic: #7209b7;
+            --legendary: #f3722c;
+            --chroma: linear-gradient(45deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #9400D3);
+            --mystical: linear-gradient(45deg, #FFD700, #C0C0C0, #CD7F32);
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.04);
+            
+            /* Transitions */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Border radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-full: 9999px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--white);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--medium-gray);
+            font-weight: 400;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-full);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-sm);
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--light-gray);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-accent:hover {
+            background-color: #d31667;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: 50%;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        /* Login Page */
+        #login-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-light), var(--white));
+            position: relative;
+            overflow: hidden;
+        }
+
+        #login-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(67,97,238,0.1) 0%, rgba(255,255,255,0) 70%);
+            z-index: 0;
+        }
+
+        .login-container {
+            background: rgba(255,255,255,0.98);
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .tagline {
+            color: var(--medium-gray);
+            font-style: italic;
+            font-weight: 300;
+            font-size: 1.125rem;
+        }
+
+        .login-box {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1.25rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--light);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67,97,238,0.2);
+            background-color: var(--white);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .or-divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--medium-gray);
+        }
+
+        .or-divider::before, .or-divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid var(--light-gray);
+            margin: 0 1rem;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dashboard */
+        .dashboard-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: var(--light);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: var(--white);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .navbar-brand span {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-white {
+            color: var(--dark);
+        }
+
+        .logo-blue {
+            color: var(--primary);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .balance {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 0.5rem 1.25rem;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .balance i {
+            font-size: 0.9rem;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 2px solid var(--white);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-text {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .action-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 1.75rem;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.05);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary);
+        }
+
+        .action-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1.25rem;
+            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary-light), var(--white));
+            width: 70px;
+            height: 70px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-lg);
+        }
+
+        .action-card h3 {
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        .action-card p {
+            color: var(--medium-gray);
+            font-size: 0.95rem;
+        }
+
+        /* Activity Feed */
+        .activity-list {
+            list-style: none;
+            margin-top: 1rem;
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .activity-list li {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .activity-list li:last-child {
+            border-bottom: none;
+        }
+
+        .activity-list li:hover {
+            background-color: var(--light);
+        }
+
+        .activity-list i {
+            color: var(--primary);
+            width: 24px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .activity-list .time {
+            margin-left: auto;
+            font-size: 0.8rem;
+            color: var(--medium-gray);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 1rem;
+            background-color: var(--white);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            bottom: 0;
+            z-index: 90;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--medium-gray);
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            padding: 0.5rem;
+            border-radius: var(--radius-md);
+        }
+
+        .nav-link i {
+            font-size: 1.4rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background-color: var(--primary-light);
+        }
+
+        /* Market Pages */
+        .market-container, .packs-container, .blooks-container, 
+        .auction-container, .trade-container {
+            padding: 2rem;
+            flex: 1;
+            background-color: var(--white);
+            margin: 1rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Tabs */
+        .market-tabs, .pack-categories, .trade-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding-bottom: 0.75rem;
+        }
+
+        .tab-btn, .pack-category-btn {
+            padding: 0.625rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-full);
+            background-color: var(--light);
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: 500;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .tab-btn:hover, .pack-category-btn:hover {
+            background-color: var(--light-gray);
+        }
+
+        .tab-btn.active, .pack-category-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Grid Layout */
+        .items-grid, .packs-grid, .blooks-grid, .auctions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        /* Item Cards */
+        .item-card, .pack-card, .blook-card, .auction-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-card:hover, .pack-card:hover, .blook-card:hover, .auction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .item-card img, .pack-card img, .blook-card img, .auction-blook img {
+            width: 100%;
+            height: 140px;
+            object-fit: contain;
+            margin-bottom: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .item-card:hover img, .pack-card:hover img, .blook-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .item-name, .pack-name, .blook-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .item-price, .pack-price {
+            color: var(--primary);
+            font-weight: 600;
+            margin: 1rem 0;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .item-rarity, .pack-odds, .blook-rarity {
+            font-size: 0.85rem;
+            color: var(--medium-gray);
+            margin-bottom: 1rem;
+        }
+
+        /* Pack Specific Styles */
+        .pack-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pack-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary);
+        }
+
+        .pack-card img {
+            height: 160px;
+        }
+
+        /* Blook Specific Styles */
+        .blook-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        /* Rarity Styles */
+        .uncommon {
+            border-top: 4px solid var(--uncommon);
+        }
+
+        .rare {
+            border-top: 4px solid var(--rare);
+        }
+
+        .epic {
+            border-top: 4px solid var(--epic);
+        }
+
+        .legendary {
+            border-top: 4px solid var(--legendary);
+        }
+
+        .chroma {
+            border-top: 4px solid;
+            border-image: var(--chroma) 1;
+        }
+
+        .mystical {
+            border-top: 4px solid;
+            border-image: var(--mystical) 1;
+        }
+
+        .rarity-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .rarity-uncommon {
+            background-color: var(--uncommon);
+            color: white;
+        }
+
+        .rarity-rare {
+            background-color: var(--rare);
+            color: white;
+        }
+
+        .rarity-epic {
+            background-color: var(--epic);
+            color: white;
+        }
+
+        .rarity-legendary {
+            background-color: var(--legendary);
+            color: white;
+        }
+
+        .rarity-chroma {
+            background: var(--chroma);
+            color: white;
+        }
+
+        .rarity-mystical {
+            background: var(--mystical);
+            color: black;
+        }
+
+        /* Auction Specific Styles */
+        .auction-card {
+            display: flex;
+            text-align: left;
+            align-items: center;
+        }
+
+        .auction-blook {
+            flex: 1;
+            text-align: center;
+        }
+
+        .auction-info {
+            flex: 2;
+            padding-left: 1.5rem;
+        }
+
+        .current-bid, .time-left, .seller {
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .current-bid span, .time-left span {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .bid-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .bid-form input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .bid-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67,97,238,0.2);
+        }
+
+        /* Chat Styles */
+        .chat-container {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 350px;
+            background-color: var(--white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            border: 1px solid rgba(0,0,0,0.1);
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .chat-container.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .chat-header {
+            padding: 1rem 1.5rem;
+            background-color: var(--primary);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-chat {
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .close-chat:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: var(--light);
+        }
+
+        .message {
+            margin-bottom: 0.75rem;
+            padding: 0.75rem 1rem;
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            animation: fadeIn 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .message strong {
+            color: var(--primary);
+        }
+
+        .message.system {
+            background-color: var(--light-gray);
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid var(--light-gray);
+            background-color: var(--white);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-full);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67,97,238,0.2);
+        }
+
+        .chat-input button {
+            margin-left: 0.5rem;
+            padding: 0;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .chat-input button:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-xl);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(67,97,238,0.4);
+        }
+
+        .chat-toggle i {
+            font-size: 1.5rem;
+        }
+
+        .chat-toggle .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--danger);
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border: 2px solid var(--white);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 1.75rem;
+            }
+            
+            .items-grid, .packs-grid, .blooks-grid, .auctions-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            
+            .auction-card {
+                flex-direction: column;
+            }
+            
+            .auction-info {
+                padding-left: 0;
+                padding-top: 1rem;
+            }
+            
+            .chat-container {
+                width: 100%;
+                bottom: 70px;
+                right: 0;
+                border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" class="page active">
+        <div class="container">
+            <div class="login-container">
+                <div class="logo">
+                    <h1><span class="logo-white">WHITE</span><span class="logo-blue">LET</span></h1>
+                    <p class="tagline">Collect. Trade. Showcase.</p>
+                </div>
+
+                <div class="login-box">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="username">Username or Email</label>
+                            <input type="text" id="username" class="form-control" placeholder="Enter your username or email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-sign-in-alt"></i> Login
+                            </button>
+                            <button type="button" id="registerBtn" class="btn btn-secondary">
+                                <i class="fas fa-user-plus"></i> Register
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="or-divider">or continue with</div>
+
+                    <!-- OAuth Providers -->
+                    <div class="oauth-providers">
+                        <button class="oauth-btn btn-google" id="googleSignIn">
+                            <i class="fab fa-google"></i> Continue with Google
+                        </button>
+                        <button class="oauth-btn btn-facebook" id="facebookSignIn">
+                            <i class="fab fa-facebook-f"></i> Continue with Facebook
+                        </button>
+                        <button class="oauth-btn btn-github" id="githubSignIn">
+                            <i class="fab fa-github"></i> Continue with GitHub
+                        </button>
+                    </div>
+
+                    <div class="links">
+                        <a href="#" onclick="showPage('stats-page')"><i class="fas fa-chart-bar"></i> View Stats</a> | 
+                        <a href="#" onclick="showPage('forgot-password-page')"><i class="fas fa-key"></i> Forgot Password?</a>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <p>© 2023 Whitelet | Owner: Augustine2025 | Admin: nightfall</p>
+                <p>All accounts are reset from previous versions</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboard-page" class="page">
+        <div class="dashboard-container">
+            <nav class="navbar">
+                <a href="#" class="navbar-brand">
+                    <span class="logo-white">WHITE</span><span class="logo-blue">LET</span>
+                </a>
+                <div class="user-info">
+                    <div class="balance">
+                        <i class="fas fa-coins"></i>
+                        <span id="userBalance">5,250</span>
+                    </div>
+                    <div class="avatar">
+                        <span class="avatar-text" id="usernameDisplay">AU</span>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="market-container">
+                <h2>Welcome back, <span id="dashboard-username">Augustine2025</span>!</h2>
+                <p>What would you like to do today?</p>
+
+                <div class="quick-actions">
+                    <div class="action-card" onclick="showPage('packs-page')">
+                        <i class="fas fa-box-open float"></i>
+                        <h3>Packs</h3>
+                        <p>Open new packs and collect rare blooks</p>
+                    </div>
+                    <div class="action-card" onclick="showPage('blooks-page')">
+                        <i class="fas fa-dragon float"></i>
+                        <h3>My Blooks</h3>
+                        <p>View and manage your collection</p>
+                    </div>
+                    <div class="action-card" onclick="showPage('auction-page')">
+                        <i class="fas fa-gavel float"></i>
+                        <h3>Auction</h3>
+                        <p>Buy and sell blooks with others</p>
+                    </div>
+                    <div class="action-card" onclick="showPage('trade-page')">
+                        <i class="fas fa-exchange-alt float"></i>
+                        <h3>Trading</h3>
+                        <p>Trade blooks with friends</p>
+                    </div>
+                </div>
+
+                <h2>Recent Activity</h2>
+                <ul class="activity-list">
+                    <li>
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Purchased Standard Pack - 250 coins</span>
+                        <span class="time">2h ago</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-trophy"></i>
+                        <span>Won Frog (Uncommon) from pack</span>
+                        <span class="time">4h ago</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Logged in</span>
+                        <span class="time">6h ago</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-coins"></i>
+                        <span>Received daily bonus of 100 coins</span>
+                        <span class="time">1d ago</span>
+                    </li>
+                </ul>
+            </div>
+
+            <nav class="bottom-nav">
+                <a href="#" onclick="showPage('dashboard-page')" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" onclick="showPage('stats-page')" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Stats</span>
+                </a>
+                <a href="#" class="nav-link" id="openChatBtn">
+                    <i class="fas fa-comments"></i>
+                    <span>Chat</span>
+                </a>
+                <a href="#" onclick="logout()" class="nav-link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Packs Page -->
+    <div id="packs-page" class="page">
+        <div class="dashboard-container">
+            <nav class="navbar">
+                <a href="#" onclick="showPage('dashboard-page')" class="navbar-brand">
+                    <span class="logo-white">WHITE</span><span class="logo-blue">LET</span>
+                </a>
+                <div class="user-info">
+                    <div class="balance">
+                        <i class="fas fa-coins"></i>
+                        <span id="packs-balance">5,250</span>
+                    </div>
+                    <div class="avatar">
+                        <span class="avatar-text" id="packs-username">AU</span>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="packs-container">
+                <h2>Packs Shop</h2>
+                <p>Open packs to collect rare blooks and grow your collection!</p>
+
+                <div class="pack-categories">
+                    <button class="pack-category-btn active" data-category="all">All Packs</button>
+                    <button class="pack-category-btn" data-category="standard">Standard</button>
+                    <button class="pack-category-btn" data-category="premium">Premium</button>
+                    <button class="pack-category-btn" data-category="special">Special</button>
+                </div>
+
+                <div class="packs-grid">
+                    <!-- Standard Pack -->
+                    <div class="pack-card uncommon" data-rarity="uncommon">
+                        <div class="pack-image-placeholder" style="height: 160px; background: linear-gradient(135deg, #e0fbfc, #ffffff); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border-radius: var(--radius-md);">
+                            <i class="fas fa-box-open" style="font-size: 3.5rem; color: var(--uncommon);"></i>
+                        </div>
+                        <h3 class="pack-name">Standard Pack</h3>
+                        <p class="pack-price"><i class="fas fa-coins"></i> 250</p>
+                        <p class="pack-odds">Guaranteed <span class="rarity-badge rarity-uncommon">Uncommon</span></p>
+                        <button class="btn btn-primary buy-pack">Buy & Open</button>
+                    </div>
+
+                    <!-- Premium Pack -->
+                    <div class="pack-card rare" data-rarity="rare">
+                        <div class="pack-image-placeholder" style="height: 160px; background: linear-gradient(135deg, #e0fbfc, #ffffff); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border-radius: var(--radius-md);">
+                            <i class="fas fa-gem" style="font-size: 3.5rem; color: var(--rare);"></i>
+                        </div>
+                        <h3 class="pack-name">Premium Pack</h3>
+                        <p class="pack-price"><i class="fas fa-coins"></i> 750</p>
+                        <p class="pack-odds">Guaranteed <span class="rarity-badge rarity-rare">Rare</span></p>
+                        <button class="btn btn-primary buy-pack">Buy & Open</button>
+                    </div>
+
+                    <!-- Epic Pack -->
+                    <div class="pack-card epic" data-rarity="epic">
+                        <div class="pack-image-placeholder" style="height: 160px; background: linear-gradient(135deg, #e0fbfc, #ffffff); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border-radius: var(--radius-md);">
+                            <i class="fas fa-crown" style="font-size: 3.5rem; color: var(--epic);"></i>
+                        </div>
+                        <h3 class="pack-name">Epic Pack</h3>
+                        <p class="pack-price"><i class="fas fa-coins"></i> 1,500</p>
+                        <p class="pack-odds">Guaranteed <span class="rarity-badge rarity-epic">Epic</span></p>
+                        <button class="btn btn-primary buy-pack">Buy & Open</button>
+                    </div>
+
+                    <!-- Legendary Pack -->
+                    <div class="pack-card legendary" data-rarity="legendary">
+                        <div class="pack-image-placeholder" style="height: 160px; background: linear-gradient(135deg, #e0fbfc, #ffffff); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border-radius: var(--radius-md);">
+                            <i class="fas fa-fire" style="font-size: 3.5rem; color: var(--legendary);"></i>
+                        </div>
+                        <h3 class="pack-name">Legendary Pack</h3>
+                        <p class="pack-price"><i class="fas fa-coins"></i> 3,000</p>
+                        <p class="pack-odds">Guaranteed <span class="rarity-badge rarity-legendary">Legendary</span></p>
+                        <button class="btn btn-primary buy-pack pulse">Buy & Open</button>
+                    </div>
+
+                    <!-- Chroma Pack -->
+                    <div class="pack-card chroma" data-rarity="chroma">
+                        <div class="pack-image-placeholder" style="height: 160px; background: var(--chroma); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border-radius: var(--radius-md);">
+                            <i class="fas fa-palette" style="font-size: 3.5rem; color: white;"></i>
+                        </div>
+                        <h3 class="pack-name">Chroma Pack</h3>
+                        <p class="pack-price"><i class="fas fa-coins"></i> 5,000</p>
+                        <p class="pack-odds">1% Chance for <span class="rarity-badge rarity-chroma">Chroma</span></p>
+                        <button class="btn btn-primary buy-pack pulse">Buy & Open</button>
+                    </div>
+
+                    <!-- Mystical Pack -->
+                    <div class="pack-card mystical" data-rarity="mystical">
+                        <div class="pack-image-placeholder" style="height: 160px; background: var(--mystical); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border-radius: var(--radius-md);">
+                            <i class="fas fa-star" style="font-size: 3.5rem; color: black;"></i>
+                        </div>
+                        <h3 class="pack-name">Mystical Pack</h3>
+                        <p class="pack-price"><i class="fas fa-coins"></i> 10,000</p>
+                        <p class="pack-odds">0.1% Chance for <span class="rarity-badge rarity-mystical">Mystical</span></p>
+                        <button class="btn btn-primary buy-pack pulse">Buy & Open</button>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="bottom-nav">
+                <a href="#" onclick="showPage('dashboard-page')" class="nav-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
+                </a>
+                <a href="#" onclick="showPage('blooks-page')" class="nav-link">
+                    <i class="fas fa-dragon"></i>
+                    <span>My Blooks</span>
+                </a>
+                <a href="#" onclick="showPage('auction-page')" class="nav-link">
+                    <i class="fas fa-gavel"></i>
+                    <span>Auction</span>
+                </a>
+                <a href="#" class="nav-link" id="openChatBtn2">
+                    <i class="fas fa-comments"></i>
+                    <span>Chat</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Chat Toggle Button -->
+    <div class="chat-toggle" id="chatToggle">
+        <i class="fas fa-comment-dots"></i>
+        <div class="badge">3</div>
+    </div>
+
+    <!-- Chat Container -->
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <span>Global Chat</span>
+            <span class="close-chat" id="closeChat">×</span>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message system">
+                Welcome to Whitelet Global Chat! Be kind to other users.
+            </div>
+            <div class="message">
+                <strong>BlookMaster:</strong> Just pulled a Chroma Dragon! So excited!
+            </div>
+            <div class="message">
+                <strong>TradeKing:</strong> Anyone want to trade for my Legendary Lion?
+            </div>
+            <div class="message">
+                <strong>Newbie123:</strong> How do I get more coins?
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            
+            // Close chat when navigating
+            closeChat();
+        }
+
+        // Chat Functionality
+        const chatToggle = document.getElementById('chatToggle');
+        const chatContainer = document.getElementById('chatContainer');
+        const closeChatBtn = document.getElementById('closeChat');
+        const openChatBtns = document.querySelectorAll('[id^="openChatBtn"]');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendMessageBtn = document.getElementById('sendMessage');
+
+        function toggleChat() {
+            chatContainer.classList.toggle('active');
+            if (chatContainer.classList.contains('active')) {
+                chatContainer.style.display = 'flex';
+                setTimeout(() => {
+                    chatContainer.classList.add('active');
+                }, 10);
+            } else {
+                chatContainer.classList.remove('active');
+                setTimeout(() => {
+                    chatContainer.style.display = 'none';
+                }, 300);
+            }
+        }
+
+        function closeChat() {
+            chatContainer.classList.remove('active');
+            setTimeout(() => {
+                chatContainer.style.display = 'none';
+            }, 300);
+        }
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message) {
+                const username = document.getElementById('usernameDisplay')?.textContent || 'Guest';
+                addMessageToChat(username, message);
+                chatInput.value = '';
+            }
+        }
+
+        function addMessageToChat(sender, message) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message';
+            messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Event Listeners
+        chatToggle.addEventListener('click', toggleChat);
+        closeChatBtn.addEventListener('click', closeChat);
+        openChatBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleChat();
+            });
+        });
+        sendMessageBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // Logout Function
+        function logout() {
+            // In a real app, you would clear the auth token
+            localStorage.removeItem('authToken');
+            showPage('login-page');
+        }
+
+        // Pack Category Filtering
+        document.querySelectorAll('.pack-category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.pack-category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                document.querySelectorAll('.pack-card').forEach(card => {
+                    if (category === 'all' || card.dataset.rarity === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Buy Pack Functionality
+        document.querySelectorAll('.buy-pack').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const packCard = this.closest('.pack-card');
+                const packName = packCard.querySelector('.pack-name').textContent;
+                const packPrice = packCard.querySelector('.pack-price').textContent;
+                
+                alert(`You bought ${packName} for ${packPrice}! In a real app, this would open the pack.`);
+            });
+        });
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in (demo purposes)
+            const loggedIn = localStorage.getItem('authToken');
+            if (loggedIn) {
+                showPage('dashboard-page');
+            } else {
+                showPage('login-page');
+            }
+        });
+    </script>
+</body>
+</html>
